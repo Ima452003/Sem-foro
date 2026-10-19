@@ -3,56 +3,63 @@
   "sector": "Actividad general",
   "titulo": "EMAE desestacionalizado. Índice noviembre 2023 = 100",
   "archivo": "2_emae_sa.png",
-  "version": "202610191847",
+  "version": "202610192005",
   "nota": "Fuente: IERAL en base a INDEC. Actualizado 19/10/2026"
  },
  {
   "sector": "Actividad general",
   "titulo": "EMAE desestacionalizado por sectores. Variación acumulada desde noviembre de 2023",
   "archivo": "1_emae_sa_sectores_acumulado.png",
-  "version": "202610191847",
+  "version": "202610192005",
   "nota": "Fuente: IERAL en base a INDEC. Actualizado 19/10/2026"
  },
  {
   "sector": "Industria",
   "titulo": "IPI manufacturero desestacionalizado. Índice noviembre 2023 = 100",
   "archivo": "3_ipi_sa.png",
-  "version": "202610191847",
+  "version": "202610192005",
   "nota": "Fuente: IERAL en base a INDEC. Actualizado 19/10/2026"
  },
  {
   "sector": "Industria",
   "titulo": "IPI manufacturero desestacionalizado por divisiones. Variación acumulada desde noviembre de 2023",
   "archivo": "4_ipi_sa_divisiones_acumulado.png",
-  "version": "202610191847",
+  "version": "202610192005",
   "nota": "Fuente: IERAL en base a INDEC. Actualizado 19/10/2026"
  },
  {
   "sector": "Construcción",
   "titulo": "ISAC desestacionalizado. Índice noviembre 2023 = 100",
   "archivo": "5_isac_sa.png",
-  "version": "202610191847",
+  "version": "202610192005",
   "nota": "Fuente: IERAL en base a INDEC. Actualizado 19/10/2026"
  },
  {
   "sector": "Construcción",
   "titulo": "ISAC. Variación interanual (serie original) y mensual (serie desestacionalizada)",
   "archivo": "6_isac_variaciones.png",
-  "version": "202610191847",
+  "version": "202610192005",
+  "nota": "Fuente: IERAL en base a INDEC. Actualizado 19/10/2026"
+ },
+ {
+  "sector": "Construcción",
+  "titulo": "Demanda de insumos para la construcción",
+  "archivo": "6b_isac_insumos_tabla.png",
+  "version": "202610192005",
   "nota": "Fuente: IERAL en base a INDEC. Actualizado 19/10/2026"
  },
  {
   "sector": "Turismo",
   "titulo": "Turismo internacional: receptivo, emisivo y saldo (viajeros, serie original)",
   "archivo": "7_turismo_flujos.png",
-  "version": "202610191847",
+  "version": "202610192005",
   "nota": "Fuente: IERAL en base a INDEC. Actualizado 19/10/2026"
  },
  {
   "sector": "Turismo",
   "titulo": "Turismo internacional: variación interanual de emisivo y receptivo (serie original)",
   "archivo": "8_turismo_var_interanual.png",
-  "version": "202610191847",
+  "version": "202610192005",
   "nota": "Fuente: IERAL en base a INDEC. Actualizado 19/10/2026"
  }
 ]
