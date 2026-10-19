@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Semáforo IERAL</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: encabezado con leyenda; un bloque por sector; tarjetas de indicador con luz de estado y sparkline */
+:root{
+  --bg:#f6f7f5; --surface:#ffffff; --fg:#1b2420; --muted:#66716b; --line:#dde2dd;
+  --accent:#1f5d4a;
+  --ok:#1c8a4e; --warn:#c98a00; --bad:#c23b2e; --na:#9aa49e;
+  --ok-bg:#e3f3ea; --warn-bg:#faf0d4; --bad-bg:#f8e1de; --na-bg:#eceeec;
+  --f-display:'Fraunces',Georgia,serif; --f-body:'IBM Plex Sans',system-ui,sans-serif; --f-mono:'IBM Plex Mono',ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#121815; --surface:#1b2420; --fg:#e8ece9; --muted:#9aa59f; --line:#2c3732; --accent:#6cc4a3;
+  --ok:#4fc983; --warn:#e5b53a; --bad:#ef7568; --na:#74807a;
+  --ok-bg:#183626; --warn-bg:#3a3014; --bad-bg:#3d1f1b; --na-bg:#242d29; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121815; --surface:#1b2420; --fg:#e8ece9; --muted:#9aa59f; --line:#2c3732; --accent:#6cc4a3;
+  --ok:#4fc983; --warn:#e5b53a; --bad:#ef7568; --na:#74807a;
+  --ok-bg:#183626; --warn-bg:#3a3014; --bad-bg:#3d1f1b; --na-bg:#242d29; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:15px/1.5 var(--f-body);
+  padding-block:28px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1120px;margin:0 auto;display:flex;flex-direction:column;gap:32px}
+header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px;border-bottom:1px solid var(--line);padding-bottom:18px}
+h1{font:600 clamp(28px,5vw,40px)/1.1 var(--f-display);margin:0;text-wrap:balance}
+.sub{color:var(--muted);margin:6px 0 0;font-size:14px}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--na);display:inline-block}
+.dot.ok{background:var(--ok)}.dot.warn{background:var(--warn)}.dot.bad{background:var(--bad)}
+.sector{display:flex;flex-direction:column;gap:14px}
+.sector-h{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.sector-h h2{font:600 22px/1.2 var(--f-display);margin:0}
+.tally{display:flex;gap:6px}
+.pill{font:500 12px var(--f-mono);padding:2px 8px;border-radius:99px;background:var(--na-bg);color:var(--muted)}
+.pill.ok{background:var(--ok-bg);color:var(--ok)}.pill.warn{background:var(--warn-bg);color:var(--warn)}.pill.bad{background:var(--bad-bg);color:var(--bad)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.name{font-weight:600;line-height:1.3;min-width:0;overflow-wrap:anywhere}
+.light{flex:none;width:14px;height:14px;border-radius:50%;background:var(--na);margin-top:3px;box-shadow:0 0 0 4px var(--na-bg)}
+.light.ok{background:var(--ok);box-shadow:0 0 0 4px var(--ok-bg)}
+.light.warn{background:var(--warn);box-shadow:0 0 0 4px var(--warn-bg)}
+.light.bad{background:var(--bad);box-shadow:0 0 0 4px var(--bad-bg)}
+.tipo{display:block;font-weight:400;font-size:12px;color:var(--muted)}
+.val{font:500 28px/1 var(--f-mono);font-variant-numeric:tabular-nums}
+.unit{font-size:12px;color:var(--muted);font-family:var(--f-body);margin-left:6px}
+.vars{display:flex;gap:16px;font:400 13px var(--f-mono);font-variant-numeric:tabular-nums}
+.vars b{display:block;font:400 11px var(--f-body);color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+.up{color:var(--ok)}.down{color:var(--bad)}.flat{color:var(--muted)}
+svg.spark{width:100%;height:36px;display:block}
+.meta{font-size:12px;color:var(--muted);display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.empty{border:1px dashed var(--line);border-radius:6px;padding:40px 20px;text-align:center;color:var(--muted)}
+.demo{font:inherit;padding:8px 14px;border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:6px;cursor:pointer}
+.empty strong{display:block;font:600 20px var(--f-display);color:var(--fg);margin-bottom:6px}
+nav{display:flex;gap:4px;overflow-x:auto;border-bottom:1px solid var(--line);margin-top:-14px}
+nav button{font:500 14px var(--f-body);color:var(--muted);background:none;border:0;border-bottom:3px solid transparent;padding:10px 14px;cursor:pointer;white-space:nowrap}
+nav button:hover{color:var(--fg)}
+nav button[aria-selected=true]{color:var(--fg);border-bottom-color:var(--accent)}
+nav button:focus-visible,#demo:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.sum{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.sumcard{text-align:left;font:inherit;color:inherit;cursor:pointer;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.sumcard:hover{border-color:var(--accent)}
+.sumcard h2{font:600 20px var(--f-display);margin:0}
+.bar{display:flex;height:8px;border-radius:4px;overflow:hidden;background:var(--na-bg)}
+.bar i{display:block}.bar .ok{background:var(--ok)}.bar .warn{background:var(--warn)}.bar .bad{background:var(--bad)}
+nav{display:flex;gap:4px;overflow-x:auto;border-bottom:1px solid var(--line);margin-top:-12px;scrollbar-width:thin}
+nav button{flex:none;font:500 14px var(--f-body);color:var(--muted);background:none;border:0;border-bottom:3px solid transparent;padding:10px 16px;cursor:pointer;margin-bottom:-1px}
+nav button:hover{color:var(--fg)}
+nav button[aria-selected=true]{color:var(--accent);border-bottom-color:var(--accent);font-weight:600}
+nav button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.sum{cursor:pointer;text-align:left;font:inherit;color:inherit;width:100%}
+.sum:hover{border-color:var(--accent)}
+.sum:focus-visible{outline:2px solid var(--accent)}
+.sum .n{font:500 13px var(--f-mono);color:var(--muted)}
+.big{width:22px;height:22px}
+footer{color:var(--muted);font-size:12px}
+main{display:flex;flex-direction:column;gap:32px}
+.charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:16px}
+.chart{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:14px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.chart figcaption{font-weight:600;line-height:1.35;text-wrap:balance}
+.chart .lienzo{background:#fff;border-radius:4px;padding:6px}
+.chart img{display:block;width:100%;height:auto}
+.chart small{color:var(--muted);font-size:12px}
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Semáforo IERAL</h1>
+      <p class="sub">Indicadores sectoriales de actividad · <span id="upd">sin datos</span></p>
+    </div>
+    <div class="legend">
+      <span><i class="dot ok"></i>Crece</span>
+      <span><i class="dot warn"></i>Estable (±1%)</span>
+      <span><i class="dot bad"></i>Cae</span>
+      <span><i class="dot"></i>Sin dato</span>
+    </div>
+  </header>
+  <nav id="tabs" role="tablist" aria-label="Secciones"></nav>
+  <main id="root">
+    <div class="empty"><strong>Todavía no hay indicadores</strong>Cuando se carguen, aparecerán acá.</div>
+  </main>
+  <footer>El color se calcula con la variación interanual. Umbral de estabilidad: ±1%.</footer>
+</div>
+
+<script>
+const root=document.getElementById('root');
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt=(n,d=1)=>typeof n==='number'?n.toLocaleString('es-AR',{minimumFractionDigits:d,maximumFractionDigits:d}):'–';
+const pct=n=>typeof n==='number'?(n>0?'+':'')+fmt(n)+'%':'–';
+const cls=n=>typeof n!=='number'?'flat':n>0.05?'up':n<-0.05?'down':'flat';
+function estado(d){
+  if(['ok','warn','bad','na'].includes(d.estado))return d.estado;
+  const v=d.var_ia;
+  if(typeof v!=='number')return 'na';
+  return v>1?'ok':v<-1?'bad':'warn';
+}
+function spark(a){
+  if(!Array.isArray(a)||a.length<2)return '';
+  const w=200,h=36,p=3,mn=Math.min(...a),mx=Math.max(...a),r=mx-mn||1;
+  const pts=a.map((v,i)=>[p+i*(w-2*p)/(a.length-1),h-p-(v-mn)/r*(h-2*p)]);
+  const l=pts[pts.length-1];
+  return `<svg class="spark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" aria-hidden="true">
+    <polyline points="${pts.map(q=>q.join(',')).join(' ')}" fill="none" stroke="var(--accent)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+    <circle cx="${l[0]}" cy="${l[1]}" r="2.5" fill="var(--accent)"/></svg>`;
+}
+function card(d){
+  const e=estado(d);
+  return `<article class="card">
+    <div class="top"><div class="name">${esc(d.nombre)}${d.tipo?`<small class="tipo">${esc(d.tipo)}</small>`:''}</div><i class="light ${e}" title="${e}"></i></div>
+    <div class="val">${fmt(d.valor,d.decimales??1)}<span class="unit">${esc(d.unidad)}</span></div>
+    <div class="vars"><div><b>vs. mes ant.</b><span class="${cls(d.var_mm)}">${pct(d.var_mm)}</span></div>
+    <div><b>interanual</b><span class="${cls(d.var_ia)}">${pct(d.var_ia)}</span></div></div>
+    ${spark(d.serie)}
+    <div class="meta"><span>${esc(d.periodo)}</span><span>${esc(d.fuente)}</span></div>
+  </article>`;
+}
+const TABS=['Semáforo','Actividad general','Industria','Construcción','Turismo'];
+const slug=t=>t.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\s+/g,'-');
+let ITEMS=[], GRAFS=[], cur=TABS[0];
+const tabsEl=document.getElementById('tabs');
+tabsEl.innerHTML=TABS.map(t=>`<button role="tab" data-t="${esc(t)}">${esc(t)}</button>`).join('');
+function tally(arr){const t={ok:0,warn:0,bad:0,na:0};arr.forEach(d=>t[estado(d)]++);return t}
+function pills(t){return ['ok','warn','bad','na'].filter(k=>t[k]).map(k=>`<span class="pill ${k}">${t[k]}</span>`).join('')}
+function overall(t){return t.bad?'bad':t.warn?'warn':t.ok?'ok':'na'}
+function render(){
+  tabsEl.querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',b.dataset.t===cur));
+  const secs=TABS.slice(1);
+  let html='';
+  if(cur===TABS[0]){
+    html=`<div class="grid">`+secs.map(s=>{
+      const arr=ITEMS.filter(d=>d.sector===s),t=tally(arr);
+      return `<button class="card sum" data-go="${esc(s)}"><div class="top"><div class="name">${esc(s)}</div><i class="light big ${arr.length?overall(t):'na'}"></i></div>
+      <div class="n">${arr.length?arr.length+' indicadores':'Sin indicadores aún'}</div><div class="tally">${pills(t)}</div></button>`}).join('')+`</div>`;
+  }else{
+    const arr=ITEMS.filter(d=>d.sector===cur).sort((a,b)=>(a.orden??99)-(b.orden??99)||String(a.nombre).localeCompare(b.nombre)||String(a.tipo).localeCompare(b.tipo));
+    const gr={};arr.forEach(d=>(gr[d.grupo||cur]??=[]).push(d));
+    const gs=GRAFS.filter(g=>g.sector===cur);
+    html=gs.length?`<div class="charts">${gs.map(g=>`<figure class="chart"><figcaption>${esc(g.titulo)}</figcaption><div class="lienzo"><a href="graficos/${esc(g.archivo)}" target="_blank" rel="noopener"><img src="graficos/${esc(g.archivo)}?v=${esc(g.version)}" alt="${esc(g.titulo)}" loading="lazy"></a></div><small>${esc(g.nota||'')}</small></figure>`).join('')}</div>`
+      :`<div class="empty"><strong>${esc(cur)}</strong>Todavía no hay gráficos en esta sección.</div>`;
+  }
+  root.innerHTML=html;
+  const last=ITEMS.map(d=>d.actualizado).filter(Boolean).sort().pop();
+  document.getElementById('upd').textContent=last?'actualizado '+last:'sin datos';
+}
+function go(t){cur=t;try{history.replaceState(null,'','#'+slug(t))}catch(e){}render()}
+tabsEl.addEventListener('click',e=>{const b=e.target.closest('button');if(b)go(b.dataset.t)});
+root.addEventListener('click',e=>{const g=e.target.closest('[data-go]');if(g)go(g.dataset.go)});
+const h=location.hash.slice(1);const m=TABS.find(t=>slug(t)===h);if(m)cur=m;
+render();
+
+fetch('datos.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{ITEMS=d;render()}).catch(()=>{});
+fetch('graficos.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{GRAFS=d;render()}).catch(()=>{});
+</script>
