@@ -87,6 +87,13 @@ main{display:flex;flex-direction:column;gap:32px}
 .chart .lienzo{background:#fff;border-radius:4px;padding:6px}
 .chart img{display:block;width:100%;height:auto}
 .chart small{color:var(--muted);font-size:12px}
+.tabla-wrap{overflow-x:auto;background:#fff;border-radius:4px}
+.tabla{border-collapse:collapse;width:100%;min-width:520px;font-size:14px;color:#000;font-variant-numeric:tabular-nums}
+.tabla th,.tabla td{border:1px solid #a6a6a6;padding:6px 8px}
+.tabla thead th{background:#d8e4bc;font-weight:700;text-align:center}
+.tabla thead th:first-child{background:#fff;border:none}
+.tabla td{text-align:right}
+.tabla td:first-child{text-align:left;font-weight:700;background:#fff}
 </style>
 
 <div class="wrap">
@@ -162,7 +169,7 @@ function render(){
     const arr=ITEMS.filter(d=>d.sector===cur).sort((a,b)=>(a.orden??99)-(b.orden??99)||String(a.nombre).localeCompare(b.nombre)||String(a.tipo).localeCompare(b.tipo));
     const gr={};arr.forEach(d=>(gr[d.grupo||cur]??=[]).push(d));
     const gs=GRAFS.filter(g=>g.sector===cur);
-    html=gs.length?`<div class="charts">${gs.map(g=>`<figure class="chart"><figcaption>${esc(g.titulo)}</figcaption><div class="lienzo"><a href="graficos/${esc(g.archivo)}" target="_blank" rel="noopener"><img src="graficos/${esc(g.archivo)}?v=${esc(g.version)}" alt="${esc(g.titulo)}" loading="lazy"></a></div><small>${esc(g.nota||'')}</small></figure>`).join('')}</div>`
+    html=gs.length?`<div class="charts">${gs.map(g=>g.tabla?`<figure class="chart"><figcaption>${esc(g.titulo)}</figcaption><div class="tabla-wrap"><table class="tabla"><thead><tr><th></th>${g.tabla.columnas.map(c=>`<th>${esc(c)}</th>`).join('')}</tr></thead><tbody>${g.tabla.filas.map(f=>`<tr><td>${esc(f.nombre)}</td>${f.valores.map((v,i)=>`<td style="background:${esc(f.colores[i])}">${esc(v)}</td>`).join('')}</tr>`).join('')}</tbody></table></div><small>${esc(g.nota||'')}</small></figure>`:`<figure class="chart"><figcaption>${esc(g.titulo)}</figcaption><div class="lienzo"><a href="graficos/${esc(g.archivo)}" target="_blank" rel="noopener"><img src="graficos/${esc(g.archivo)}?v=${esc(g.version)}" alt="${esc(g.titulo)}" loading="lazy"></a></div><small>${esc(g.nota||'')}</small></figure>`).join('')}</div>`
       :`<div class="empty"><strong>${esc(cur)}</strong>Todavía no hay gráficos en esta sección.</div>`;
   }
   root.innerHTML=html;

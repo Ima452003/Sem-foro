@@ -3,63 +3,253 @@
   "sector": "Actividad general",
   "titulo": "EMAE desestacionalizado. Índice noviembre 2023 = 100",
   "archivo": "2_emae_sa.png",
-  "version": "202610192005",
+  "version": "202610192009",
   "nota": "Fuente: IERAL en base a INDEC. Actualizado 19/10/2026"
  },
  {
   "sector": "Actividad general",
   "titulo": "EMAE desestacionalizado por sectores. Variación acumulada desde noviembre de 2023",
   "archivo": "1_emae_sa_sectores_acumulado.png",
-  "version": "202610192005",
+  "version": "202610192009",
   "nota": "Fuente: IERAL en base a INDEC. Actualizado 19/10/2026"
  },
  {
   "sector": "Industria",
   "titulo": "IPI manufacturero desestacionalizado. Índice noviembre 2023 = 100",
   "archivo": "3_ipi_sa.png",
-  "version": "202610192005",
+  "version": "202610192009",
   "nota": "Fuente: IERAL en base a INDEC. Actualizado 19/10/2026"
  },
  {
   "sector": "Industria",
   "titulo": "IPI manufacturero desestacionalizado por divisiones. Variación acumulada desde noviembre de 2023",
   "archivo": "4_ipi_sa_divisiones_acumulado.png",
-  "version": "202610192005",
+  "version": "202610192009",
   "nota": "Fuente: IERAL en base a INDEC. Actualizado 19/10/2026"
  },
  {
   "sector": "Construcción",
   "titulo": "ISAC desestacionalizado. Índice noviembre 2023 = 100",
   "archivo": "5_isac_sa.png",
-  "version": "202610192005",
+  "version": "202610192009",
   "nota": "Fuente: IERAL en base a INDEC. Actualizado 19/10/2026"
  },
  {
   "sector": "Construcción",
   "titulo": "ISAC. Variación interanual (serie original) y mensual (serie desestacionalizada)",
   "archivo": "6_isac_variaciones.png",
-  "version": "202610192005",
+  "version": "202610192009",
   "nota": "Fuente: IERAL en base a INDEC. Actualizado 19/10/2026"
  },
  {
   "sector": "Construcción",
   "titulo": "Demanda de insumos para la construcción",
   "archivo": "6b_isac_insumos_tabla.png",
-  "version": "202610192005",
-  "nota": "Fuente: IERAL en base a INDEC. Actualizado 19/10/2026"
+  "version": "202610192009",
+  "nota": "Fuente: IERAL en base a INDEC. Actualizado 19/10/2026",
+  "tabla": {
+   "columnas": [
+    "Var vs. Nov-23",
+    "Var i.a.",
+    "Var m/m agosto",
+    "Var m/m julio"
+   ],
+   "filas": [
+    {
+     "nombre": "Yeso",
+     "valores": [
+      "-43,9%",
+      "-17,0%",
+      "-0,1%",
+      "-13,7%"
+     ],
+     "colores": [
+      "#f8696b",
+      "#f97c6f",
+      "#fcea84",
+      "#fb9974"
+     ]
+    },
+    {
+     "nombre": "Ladrillos huecos",
+     "valores": [
+      "-43,1%",
+      "-9,7%",
+      "0,3%",
+      "-9,6%"
+     ],
+     "colores": [
+      "#f8706c",
+      "#fee082",
+      "#f4e883",
+      "#fdbd7b"
+     ]
+    },
+    {
+     "nombre": "Artículos sanitarios de cerámica",
+     "valores": [
+      "-38,0%",
+      "-11,4%",
+      "-16,3%",
+      "-2,4%"
+     ],
+     "colores": [
+      "#fb9a74",
+      "#fdc97d",
+      "#f8696b",
+      "#dde182"
+     ]
+    },
+    {
+     "nombre": "Hierro redondo y aceros",
+     "valores": [
+      "-36,2%",
+      "-8,1%",
+      "-3,8%",
+      "-8,8%"
+     ],
+     "colores": [
+      "#fba977",
+      "#f3e883",
+      "#fdcf7f",
+      "#fdc47d"
+     ]
+    },
+    {
+     "nombre": "Pisos y revestimientos cerámicos",
+     "valores": [
+      "-36,1%",
+      "-11,9%",
+      "-3,7%",
+      "-4,6%"
+     ],
+     "colores": [
+      "#fba977",
+      "#fdc27c",
+      "#fecf7f",
+      "#ffea84"
+     ]
+    },
+    {
+     "nombre": "Placas de yeso",
+     "valores": [
+      "-28,9%",
+      "1,2%",
+      "6,1%",
+      "-19,0%"
+     ],
+     "colores": [
+      "#ffe583",
+      "#63be7b",
+      "#8bc97d",
+      "#f8696b"
+     ]
+    },
+    {
+     "nombre": "Cales",
+     "valores": [
+      "-27,5%",
+      "-13,0%",
+      "-2,9%",
+      "-15,5%"
+     ],
+     "colores": [
+      "#fdea84",
+      "#fcb379",
+      "#fed680",
+      "#fa8871"
+     ]
+    },
+    {
+     "nombre": "Mosaicos graníticos y calcáreos",
+     "valores": [
+      "-26,4%",
+      "-2,3%",
+      "-0,6%",
+      "4,9%"
+     ],
+     "colores": [
+      "#fbea84",
+      "#99ce7e",
+      "#ffe984",
+      "#63be7b"
+     ]
+    },
+    {
+     "nombre": "Cemento Portland",
+     "valores": [
+      "-18,6%",
+      "-8,1%",
+      "3,1%",
+      "-4,4%"
+     ],
+     "colores": [
+      "#e8e483",
+      "#f2e783",
+      "#c1d980",
+      "#fdeb84"
+     ]
+    },
+    {
+     "nombre": "Hormigón elaborado",
+     "valores": [
+      "-11,5%",
+      "-3,0%",
+      "5,7%",
+      "3,4%"
+     ],
+     "colores": [
+      "#d7df82",
+      "#a4d17f",
+      "#92cc7e",
+      "#7bc57c"
+     ]
+    },
+    {
+     "nombre": "Pinturas para construcción",
+     "valores": [
+      "-1,2%",
+      "-0,8%",
+      "-0,5%",
+      "4,6%"
+     ],
+     "colores": [
+      "#bed880",
+      "#81c77d",
+      "#ffe984",
+      "#66bf7b"
+     ]
+    },
+    {
+     "nombre": "Asfalto",
+     "valores": [
+      "37,1%",
+      "-18,4%",
+      "8,3%",
+      "-3,4%"
+     ],
+     "colores": [
+      "#63be7b",
+      "#f8696b",
+      "#63be7b",
+      "#ede683"
+     ]
+    }
+   ]
+  }
  },
  {
   "sector": "Turismo",
   "titulo": "Turismo internacional: receptivo, emisivo y saldo (viajeros, serie original)",
   "archivo": "7_turismo_flujos.png",
-  "version": "202610192005",
+  "version": "202610192009",
   "nota": "Fuente: IERAL en base a INDEC. Actualizado 19/10/2026"
  },
  {
   "sector": "Turismo",
   "titulo": "Turismo internacional: variación interanual de emisivo y receptivo (serie original)",
   "archivo": "8_turismo_var_interanual.png",
-  "version": "202610192005",
+  "version": "202610192009",
   "nota": "Fuente: IERAL en base a INDEC. Actualizado 19/10/2026"
  }
 ]
