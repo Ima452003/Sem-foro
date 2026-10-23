@@ -148,7 +148,7 @@ function card(d){
     <div class="meta"><span>${esc(d.periodo)}</span><span>${esc(d.fuente)}</span></div>
   </article>`;
 }
-const TABS=['Semáforo','Actividad general','Industria','Construcción','Turismo'];
+const TABS=['Semáforo','Actividad general','Industria','Construcción','Turismo','Comercio Exterior'];
 const slug=t=>t.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\s+/g,'-');
 let ITEMS=[], GRAFS=[], cur=TABS[0];
 const tabsEl=document.getElementById('tabs');
